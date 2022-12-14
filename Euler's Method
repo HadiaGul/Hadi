@@ -1,0 +1,21 @@
+clear all;
+clc
+f=@(t,y) y-t^2+1;
+to=0;
+yo=0.5;
+h=0.05;
+tn=2.0;
+n=(tn-to)/h
+t(1)=to, y(1)=yo;
+ye=(t+1)^2-0.5*exp(t);
+EB=0.1*(0.5*exp(2)-2)*(exp(t)-1);
+for i=1:n
+    y(i+1)=y(i)+h*f(t(i),y(i));
+    t(i+1)=to+i*h;
+    ye(i+1)=(t(i+1)+1)^2-0.5*exp(t(i+1));
+    E(i)=abs(ye(i+1)-y(i+1));
+    EB(i)=0.1*(0.5*exp(2)-2)*(exp(t(i+1))-1);
+    fprintf('t=%4.2f y=%4.5f ye=%4.5f E=%4.5f\n', t(i+1), y(i+1), ye(i+1), E(i))
+end 
+plot(t,y,'--',t,ye)
+legend('Approximation','Exact')
